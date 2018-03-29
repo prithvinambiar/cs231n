@@ -10,7 +10,7 @@ def sigmoid(y):
 def log_loss(y, ypred):
     eps = 10 ** -15
     ypred = np.clip(ypred, eps, 1 - eps)
-    total_cost = -np.sum(y * np.log(ypred) + np.subtract(1, y) * np.log(np.subtract(1, ypred)))
+    total_cost = -np.sum(y * np.log(ypred) + (1-y) * np.log(1-ypred))
     return total_cost / (np.shape(ypred)[0] * np.shape(ypred)[1])
 
 
@@ -34,7 +34,6 @@ def train(x, y, iteration=100, learning_rate=1):
     weight_matrix = np.full((labels_count, np.shape(X)[1]), 0.1)
     losses = []
     weights = [weight_matrix]
-    p = 1
     plt.ion()
     for i in range(iteration):
         ypred = sigmoid(X.dot(weight_matrix.T))
@@ -48,7 +47,6 @@ def train(x, y, iteration=100, learning_rate=1):
             plt.pause(0.1)
         current_weight = get_updated_weights(weight_matrix, learning_rate, X, y, ypred)
         weights.append(current_weight)
-        # weight_matrix = p * (np.sum(weights, axis=0) / len(weights)) + ((1-p) * current_weight)
         weight_matrix = np.sum(weights, axis=0) / len(weights)
 
     return weight_matrix, losses

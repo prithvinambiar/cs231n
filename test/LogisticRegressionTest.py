@@ -45,7 +45,7 @@ for i in y:
         y_reshaped.append([0, 1])
 y_reshaped = np.array(y_reshaped)
 weight_matrix, losses = LogisticRegression.train(train, y_reshaped,
-                                                 iteration=101, learning_rate=0.1)
+                                                 iteration=10, learning_rate=0.1)
 test_y_reshaped = []
 for i in y_test:
     if i == 0:
