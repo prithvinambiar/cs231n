@@ -5,8 +5,8 @@ import numpy as np
 def unpickle(file):
     import pickle
     with open(file, 'rb') as fo:
-        dict = pickle.load(fo, encoding='bytes')
-    return dict
+        dict_ = pickle.load(fo, encoding='bytes')
+    return dict_
 
 
 train_data = unpickle('../data/train')
@@ -37,20 +37,7 @@ y = np.array(y)
 test = np.array(test)
 y_test = np.array(y_test)
 
-y_reshaped = []
-for i in y:
-    if i == 0:
-        y_reshaped.append([1, 0])
-    else:
-        y_reshaped.append([0, 1])
-y_reshaped = np.array(y_reshaped)
-weight_matrix, losses = LogisticRegression.train(train, y_reshaped,
-                                                 iteration=10, learning_rate=0.1)
-test_y_reshaped = []
-for i in y_test:
-    if i == 0:
-        test_y_reshaped.append([1, 0])
-    else:
-        test_y_reshaped.append([0, 1])
-test_y_reshaped = np.array(test_y_reshaped)
-LogisticRegression.accuracy(weight_matrix, test, test_y_reshaped)
+weight_matrix, losses = LogisticRegression.train(train, y,
+                                                 iteration=1, learning_rate=0.1)
+LogisticRegression.accuracy(weight_matrix, test, y_test)
+
